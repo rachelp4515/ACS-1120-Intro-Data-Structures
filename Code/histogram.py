@@ -3,6 +3,12 @@ from distutils.command.clean import clean
 from pprint import pprint
 
 
+def read_file(filename):
+  f = open(filename, 'r', encoding='utf-8-sig')
+  words = f.read()
+  f.close()
+  return words
+
 def listogram(source_text):
     with open(source_text, 'r') as f:
         source = f.read().lower()

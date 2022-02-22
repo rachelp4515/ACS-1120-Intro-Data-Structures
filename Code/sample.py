@@ -4,8 +4,8 @@ from pprint import pprint
 
 hist = dictogram("fish.txt")
 
-def random_word(hist):
-    return random.choice(list(hist.keys()))
+# def random_word(hist):
+#     return random.choice(list(hist.keys()))
 
 
 
