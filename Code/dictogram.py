@@ -26,13 +26,13 @@ class Dictogram(dict):
             self[word] = new_count
         else:
             self[word] = count
-            self.types +=1
+            self.types += 1
         self.tokens += count
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency countdd
-        return self.get(word,0)
+        return self.get(word, 0)
 
     def sample(self):
         """Return a word from this histogram, randomly sampled by weighting
@@ -44,7 +44,6 @@ class Dictogram(dict):
             target += count
             if target >= dart:
                 return word
-
 
 
 def print_histogram(word_list):
@@ -89,11 +88,12 @@ def print_histogram_samples(histogram):
         sampled_freq = samples / samples_hist.tokens
         # Calculate error between word's sampled and observed frequency
         error = (sampled_freq - observed_freq) / observed_freq
-        color = green if abs(error) < 0.05 else yellow if abs(error) < 0.1 else red
+        color = green if abs(error) < 0.05 else yellow if abs(
+            error) < 0.1 else red
         print('| {!r:<9} '.format(word)
-            + '| {:>4} = {:>6.2%} '.format(count, observed_freq)
-            + '| {:>4} = {:>6.2%} '.format(samples, sampled_freq)
-            + '| {}{:>+7.2%}{} |'.format(color, error, reset))
+              + '| {:>4} = {:>6.2%} '.format(count, observed_freq)
+              + '| {:>4} = {:>6.2%} '.format(samples, sampled_freq)
+              + '| {}{:>+7.2%}{} |'.format(color, error, reset))
     print(divider)
     print()
 

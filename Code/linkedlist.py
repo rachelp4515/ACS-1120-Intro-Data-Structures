@@ -56,24 +56,23 @@ class LinkedList:
         O(n) because we have to traverse every single node.
         """
         # TODO: Loop through all nodes and count one for each
-        count = 0
-        node = self.head
-        while node is not None:
-            count += 1
-            node = node.next
-        return count
-
+        current_node = self.head
+        length = 0
+        while current_node is not None:
+            length += 1
+            current_node = current_node.next
+        return length
 
     def append(self, item):
         """Insert the given item at the tail of this linked list. """
         # TODO: Create new node to hold given item
         # TODO: If self.is_empty() == True set the head and the tail to the new node
         # TODO: Else append node after tail
-        
+
         # create new node for item
         new_node = Node(item)
         # if head is empty
-        if self.is_empty() == True:
+        if self.is_empty():
             # set the head and tail to new node
             self.head = new_node
             self.tail = new_node
@@ -83,7 +82,6 @@ class LinkedList:
             self.tail.next = new_node
             self.tail = new_node
             print(self.tail.next)
-
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -125,56 +123,42 @@ class LinkedList:
         """Return an item from this linked list if it is present."""
         node = self.head
         while node:
-            if matching_function(node.data): 
+            if matching_function(node.data):
                 return node.data
             node = node.next
-        return None # Nothing satisfied the matching function
+        return None  # Nothing satisfied the matching function
 
     def find_and_return_node(self, matching_function):
         """Return an item from this linked list if it is present."""
         node = self.head
         while node:
-            if matching_function(node.data): 
+            if matching_function(node.data):
                 return node
             node = node.next
-        return None # Nothing satisfied the matching function
+        return None  # Nothing satisfied the matching function
 
     def delete(self, item):
-        if self.length():
-            curr_node = self.head
-            # Checks if the head node is the item
-            if curr_node.data == item:
-                # when there is only 1 node you want to set tail and head to equal NONE
-                if curr_node == self.tail:
-                    self.tail = None
-                self.head = curr_node.next
-                # return nothing
-                return
-
-            # Keep looping through nodes until value is found
-            # This will only exit if value is found or the current_node.next == None
-            runner = curr_node.next
-            while runner and runner.next:
-                if runner.data == item:
-                    curr_node.next = runner.next
+        if self.is_empty():
+            raise ValueError(f"Item not found: {item}")
+        elif self.head.data == item and self.tail.data == item:
+            self.head = None
+            self.tail = None
+        elif self.head.data == item:
+            self.head = self.head.next
+        else:
+            current_node = self.head.next
+            last_node = self.head
+            while current_node is not None:
+                if current_node.data == item:
+                    if current_node.next is None:
+                        self.tail = last_node
+                    last_node.next = current_node.next
                     return
-                curr_node = curr_node.next
-                runner = runner.next
-
-            # This will always run when the above while loop has broken
-            # meaning the current_node.next was equal to NONE
-            # this also means you're at the last node
-            if runner.data == item:
-                curr_node.next = None
-                self.tail = curr_node
-                return
-
-        raise ValueError('Item not found: {}'.format(item))
+                last_node = current_node
+                current_node = current_node.next
+            raise ValueError(f"Item not found: {item}")
 
 
 if __name__ == "__main__":
     my_ll = LinkedList(["A", "B", "C"])
     print(my_ll)
-
-    
-

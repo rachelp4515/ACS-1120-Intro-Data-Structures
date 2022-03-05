@@ -11,7 +11,7 @@ from markov import dict_of_histograms_generator, tweet_generator
 app = Flask(__name__)
 
 
-word_list = read_file('fish.txt')
+word_list = read_file('alice.txt')
 
 @app.before_first_request
 def before_first_request():
@@ -26,11 +26,11 @@ def home():
      
     histogram = Dictogram(word_list=word_list.split(" "))
     chosen_word = histogram.sample()
-    print(histogram, "   here   ")
+    # print(histogram, "   here   ")
 
     markov_chain = dict_of_histograms_generator(word_list.split(" "))
     tweet = tweet_generator(markov_chain)
-    # chosen_word = sample(histogram)
+    chosen_word = sample(histogram)
     """Route that returns a web page containing the generated text."""
     return render_template('index.html', chosen_word=chosen_word, histogram=histogram, tweet=tweet)
 
